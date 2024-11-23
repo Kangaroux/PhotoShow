@@ -40,16 +40,12 @@ $("document").ready(function(){
 		switch(keyCode)
 		{
 			case $.ui.keyCode.RIGHT	:
-				if($("#image_bar #next").is(":visible")){
-					$("#image_bar #next a").click();
-				}
+				next_image();
 				event.preventDefault();
 				break;
 			
 			case $.ui.keyCode.LEFT	:
-				if($("#image_bar #prev").is(":visible")){
-					$("#image_bar #prev a").click();
-				}
+				prev_image();
 				event.preventDefault();
 				break;
 				

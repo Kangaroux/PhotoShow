@@ -28,6 +28,79 @@
  * @link	  http://github.com/thibaud-rohmer/PhotoShow
  */
 
+function next_image() {
+	if(!$("#image_bar #next").is(":visible"))
+		return false;
+
+	var curr_select = $(".linear_panel .selected");
+	var new_select 	= curr_select.next();
+
+	if(! new_select.length){
+		new_select = curr_select.parent().next().children(".item").first();
+	}
+
+	if(! new_select.length){
+		new_select = $(".linear_panel .item").last();
+	}
+	
+	new_url = new_select.children("a").attr("href");
+	
+	$(".image_panel").load(new_url + "&j=Pan",function(){
+		update_url(new_url,"Image");
+		
+		curr_select.removeClass("selected");
+		new_select.addClass("selected");
+		
+		init_image_panel();
+		
+		if(slideshow_status != 0){
+			hide_links();
+		}
+	});
+		
+	// Load infos
+	$(".infos").load(new_url+"&j=Inf");
+
+	return false;
+}
+
+function prev_image() {
+	if(!$("#image_bar #prev").is(":visible"))
+		return false;
+
+	var curr_select = $(".linear_panel .selected");
+	var new_select 	= curr_select.prev();
+	
+	if(! new_select.length){
+		new_select = curr_select.parent().prev().children(".item").last();
+	}
+	
+	if(! new_select.length){
+		new_select = $(".linear_panel .item").first();
+	}
+	
+	new_url = new_select.children("a").attr("href")
+	
+	$(".image_panel").load(new_url+"&j=Pan",function(){
+
+		update_url(new_url,"Image");
+
+		curr_select.removeClass("selected");
+		new_select.addClass("selected");
+
+		init_image_panel();
+
+		if(slideshow_status != 0){
+			hide_links();
+		}
+	});
+
+	// Load infos
+	$(".infos").load(new_url+"&j=Inf");
+
+	return false;
+}
+
 /**
  * Initialise the image panel
  */
@@ -80,38 +153,7 @@ function init_image_panel(){
 	});
 
 	// On clicking NEXT
-	$("#image_bar #next a").click(function(){
-		var curr_select = $(".linear_panel .selected");
-		var new_select 	= curr_select.next();
-
-		if(! new_select.length){
-			new_select = curr_select.parent().next().children(".item").first();
-		}
-
-		if(! new_select.length){
-			new_select = $(".linear_panel .item").last();
-		}
-		
-		new_url = new_select.children("a").attr("href");
-		
-		$(".image_panel").load(new_url + "&j=Pan",function(){
-			update_url(new_url,"Image");
-			
-			curr_select.removeClass("selected");
-			new_select.addClass("selected");
-			
-			init_image_panel();
-			
-			if(slideshow_status != 0){
-				hide_links();
-			}
-		});
-		 
-		// Load infos
-		$(".infos").load(new_url+"&j=Inf");
-
-		return false;
-	});
+	$("#image_bar #next a").click(next_image);
 
 
 	// Photosphere
@@ -125,39 +167,7 @@ function init_image_panel(){
 
 
 	// On clicking PREV
-	$("#image_bar #prev a").click(function(){
-		var curr_select = $(".linear_panel .selected");
-		var new_select 	= curr_select.prev();
-		
-		if(! new_select.length){
-			new_select = curr_select.parent().prev().children(".item").last();
-		}
-		
-		if(! new_select.length){
-			new_select = $(".linear_panel .item").first();
-		}
-		
-		new_url = new_select.children("a").attr("href")
-		
-		$(".image_panel").load(new_url+"&j=Pan",function(){
-
-			update_url(new_url,"Image");
-
-			curr_select.removeClass("selected");
-			new_select.addClass("selected");
-
-			init_image_panel();
-
-			if(slideshow_status != 0){
-				hide_links();
-			}
-		});
-
-		// Load infos
-		$(".infos").load(new_url+"&j=Inf");
-
-		return false;
-	});
+	$("#image_bar #prev a").click(prev_image);
 
 	// On mousewheelling
 	$(".linear_panel").mousewheel(function(event,delta){
