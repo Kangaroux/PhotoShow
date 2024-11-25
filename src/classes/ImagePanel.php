@@ -121,7 +121,7 @@ class ImagePanel implements HTMLObject
 		echo "<div id='image_panel_table'>\n";
 
 		if(isset($this->image)){
-			echo "<div id='bigimage'>\n";
+			echo "<div id='bigimage' style='position:relative;'>\n";
 			echo "<div onclick='prev_image()' style='cursor:pointer;position: absolute;top: 0;left: 0;width: 50%;height: 100%;'></div>\n";
 			echo "<div onclick='next_image()' style='cursor:pointer;position: absolute;top: 0;left: 50%;width: 50%;height: 100%;'></div>\n";
 
